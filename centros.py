@@ -7,6 +7,7 @@ class CentroDistribucion:
         self.capacidad_reserva = capacidad_reserva
         self.reserva_actual = reserva_actual
         self.consumo_diario = consumo_diario
+        self.agua_recibida = 0
 
 centros: List[CentroDistribucion] = []
 

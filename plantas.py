@@ -10,6 +10,8 @@ class PlantaPotabilizadora:
         self.eficiencia = eficiencia
         self.cantidad_litros_maxima = cantidad_litros_maxima
         self.capacidad_asignada = 0
+        self.agua_recibida = 0
+        self.agua_potabilizada = 0
         
     def puede_agregar_interconexion(self, porcentaje=None):
         if porcentaje is None:
@@ -25,7 +27,7 @@ def alta_planta():
             identificador = validar_identificador(plantas, "Ingrese el identificador de la planta potabilizadora o")
             if identificador is None:
                 return
-            eficiencia = obtener_eficiencia("Ingrese la eficiencia de la planta: ")
+            eficiencia = obtener_eficiencia("Ingrese la eficiencia de la planta o")
             if eficiencia is None:
                 return
             cantidad_litros_maxima = obtener_cantidad_litros("Ingrese la cantidad máxima de litros por día o")
