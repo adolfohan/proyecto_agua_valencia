@@ -1,4 +1,5 @@
-from enums import Eficiencia
+from enumEficacia import Eficiencia
+from enumCalidad import Calidad
 
 def validar_identificador(elementos, mensaje, debe_existir=False):
     while True:
@@ -44,7 +45,7 @@ def obtener_calidad_agua(mensaje):
             if calidad.lower() == 'cancelar':
                 return None
             elif calidad.lower() in ["potable", "alta", "media", "baja", "nopotabilizable"]:
-                return calidad
+                return Calidad[calidad.upper()]
             else:
                 print("Calidad inválida. Debe ser una de las siguientes: Potable, Alta, Media, Baja, NoPotabilizable.")
         except KeyboardInterrupt:

@@ -1,11 +1,13 @@
 import itertools
-from typing import List, Tuple
+from typing import List
 from fuentes import fuentes
 from plantas import plantas
 from centros import centros
 from utils import validar_porcentaje
 
 class Interconexion:
+    contador = itertools.count(1)
+
     def __init__(self, origen, destino, porcentaje):
         self.identificador = self.generar_identificador(origen, destino)
         self.origen = origen
@@ -13,11 +15,7 @@ class Interconexion:
         self.porcentaje = porcentaje
     
     def generar_identificador(self, origen, destino):
-        contador = itertools.count(1)
-        while True:
-            identificador_candidato = f"{origen.identificador}-{destino.identificador}-{next(contador)}"
-            if all(identificador_candidato != interconexion.identificador for interconexion in interconexiones):
-                return identificador_candidato
+        return f"{origen.identificador}-{destino.identificador}-{next(self.contador)}"
 
 interconexiones: List[Interconexion] = []
 
@@ -55,15 +53,19 @@ def alta_interconexion():
         return
     elif opcion == 1:
         origen = seleccionar_elemento_disponible(fuentes, "Seleccione una fuente hídrica: ")
-        destino_valido = seleccionar_elemento(plantas, "Seleccione una planta potabilizadora: ")
+        destino = seleccionar_elemento(plantas, "Seleccione una planta potabilizadora: ")
     elif opcion == 2:
         origen = seleccionar_elemento_disponible(plantas, "Seleccione una planta potabilizadora: ")
-        destino_valido = seleccionar_elemento(centros, "Seleccione un centro de distribución: ")
+        destino = seleccionar_elemento(centros, "Seleccione un centro de distribución: ")
     else:
         print("Opción inválida.")
         return
 
-    if origen is None or destino_valido is None:
+    if origen is None or destino is None:
+        return
+    
+    if not hasattr(origen, 'identificador') or not hasattr(destino, 'identificador'):
+        print("Origen o destino no tienen un identificador.")
         return
 
     while True:
@@ -80,8 +82,8 @@ def alta_interconexion():
         print("La capacidad asignada supera el 100% con las otras interconexiones existentes.")
         return
 
-    interconexion = Interconexion(origen, destino_valido, porcentaje)
-    interconexion.identificador = f"{origen.identificador}-{destino_valido.identificador}-{len(interconexiones) + 1}"
+    interconexion = Interconexion(origen, destino, porcentaje)
+    interconexion.identificador = f"{origen.identificador}-{destino.identificador}-{len(interconexiones) + 1}"
     interconexiones.append(interconexion)
     print("Interconexión agregada correctamente.")
 

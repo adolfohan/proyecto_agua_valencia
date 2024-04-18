@@ -8,7 +8,7 @@ from ficheros import cargar_datos, guardar_datos
 
 def menu_principal():
     while True:
-        print("Menú principal:")
+        print("\nMenú principal:")
         print("1) Fuente hídrica")
         print("2) Planta potabilizadora")
         print("3) Centro de distribución")

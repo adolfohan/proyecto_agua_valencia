@@ -1,5 +1,5 @@
 from typing import List
-from enums import Eficiencia
+from enumEficacia import Eficiencia
 from utils import validar_identificador, obtener_eficiencia, obtener_cantidad_litros
 
 class PlantaPotabilizadora:
