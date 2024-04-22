@@ -26,7 +26,10 @@ def potabilizar_agua(planta, cantidad_agua):
 def simular_dias():
     try:
         cantidad_dias = obtener_cantidad_dias("Ingrese la cantidad de días a simular o")
-        if cantidad_dias <= 0:
+        if cantidad_dias is None:
+            print("Simulación cancelada.")
+            return
+        elif cantidad_dias <= 0:
             print("La cantidad de días debe ser mayor a cero.")
             return
     except ValueError:

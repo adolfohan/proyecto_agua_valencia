@@ -5,7 +5,7 @@ def validar_identificador(elementos, mensaje, debe_existir=False):
     while True:
         try:
             identificador = input(mensaje + " ingrese 'cancelar' para volver atrás: ")
-            if identificador == 'cancelar':
+            if identificador.lower() == 'cancelar':
                 return None
             identificadores_existentes = [elemento.identificador for elemento in elementos]
             if len(identificador) >= 3 and identificador.isalnum() and (identificador in identificadores_existentes) == debe_existir:
@@ -23,7 +23,7 @@ def validar_identificador(elementos, mensaje, debe_existir=False):
 def obtener_cantidad_litros(mensaje, min_value=0, max_value=None):
     while True:
         try:
-            entrada = input(mensaje + " ingrese 'cancelar' para salir: ")
+            entrada = input(mensaje + " ingrese 'cancelar' para volver atrás: ")
             if entrada.lower() == 'cancelar':
                 return None
             cantidad = int(entrada)
@@ -41,7 +41,7 @@ def obtener_cantidad_litros(mensaje, min_value=0, max_value=None):
 def obtener_calidad_agua(mensaje):
     while True:
         try:
-            calidad = input(mensaje + " ingrese 'cancelar' para salir: ")
+            calidad = input(mensaje + " ingrese 'cancelar' para volver atrás: ")
             if calidad.lower() == 'cancelar':
                 return None
             elif calidad.lower() in ["potable", "alta", "media", "baja", "nopotabilizable"]:
@@ -56,7 +56,7 @@ def obtener_calidad_agua(mensaje):
 def obtener_eficiencia(mensaje):
     while True:
         try:
-            eficiencia = input(mensaje + " ingrese 'cancelar' para salir: ")
+            eficiencia = input(mensaje + " ingrese 'cancelar' para volver atrás: ")
             if eficiencia.lower() == 'cancelar':
                 return None
             elif eficiencia.lower() in ["alta", "media", "baja"]:
@@ -71,10 +71,11 @@ def obtener_eficiencia(mensaje):
 def validar_porcentaje(mensaje):
     while True:
         try:
-            porcentaje = int(input(mensaje + " ingrese 'cancelar' para salir: "))
-            if porcentaje == 'cancelar':
+            porcentaje = input(mensaje + " ingrese 'cancelar' para volver atrás: ")
+            if porcentaje.lower() == 'cancelar':
                 return None
-            elif 0 < porcentaje <= 100:
+            porcentaje = float(porcentaje)
+            if 0 < porcentaje <= 100:
                 return porcentaje
             else:
                 print("El porcentaje debe estar entre 1 y 100.")
@@ -88,10 +89,11 @@ def validar_porcentaje(mensaje):
 def obtener_cantidad_dias(mensaje):
     while True:
         try:
-            cantidad = int(input(mensaje + " ingrese 'cancelar' para salir: "))
-            if cantidad == 'cancelar':
+            cantidad = input(mensaje + " ingrese 'cancelar' para volver atrás: ")
+            if cantidad.lower() == 'cancelar':
                 return None
-            elif cantidad > 0:
+            cantidad = int(cantidad)
+            if cantidad > 0:
                 return cantidad
             else:
                 print("La cantidad de días debe ser un número entero mayor que cero.")

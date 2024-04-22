@@ -3,7 +3,7 @@ from typing import List
 import fuente_hidrica #import fuentes
 import planta_potabilizadora #import plantas
 import centro_distribucion #import centros
-from utils import validar_porcentaje, seleccionar_elemento
+from utils import validar_identificador, validar_porcentaje, seleccionar_elemento
 
 class Interconexion:
     contador = itertools.count(1)
@@ -109,17 +109,21 @@ def modificar_interconexion():
 
         if opcion == "0":
             return
+        elif opcion == "1":
+            identificador = input("Ingrese el identificador de la interconexión a modificar o")
+            if identificador.lower() == 'cancelar':
+                return None
         elif opcion == "2":
             if not interconexiones_list:
                 print("No hay interconexiones dadas de alta.")
                 return
-            for interconexion in interconexiones_list:
-                print(interconexion.identificador)
+            interconexion = seleccionar_elemento(interconexiones_list, "Seleccione una interconexión:")
+            if interconexion is None:
+                print("No se seleccionó ninguna interconexión.")
+                return
+            identificador = interconexion.identificador
+            print(interconexion.identificador)
             print("")
-
-        identificador = input("Ingrese el identificador de la interconexión a modificar o ingrese 'cancelar' para volver atrás: ")
-        if identificador.lower() == 'cancelar':
-            return None
 
         interconexion = next((i for i in interconexiones_list if i.identificador == identificador), None)
         if interconexion is None:
@@ -139,8 +143,8 @@ def modificar_interconexion():
         if opcion == "0":
             return
         elif opcion == "1":
-            porcentaje = validar_porcentaje("Ingrese el nuevo porcentaje de la interconexión o ingrese 'cancelar' para volver atrás: ")
-            if porcentaje is None or porcentaje.lower() == 'cancelar':
+            porcentaje = validar_porcentaje("Ingrese el nuevo porcentaje de la interconexión o")
+            if porcentaje is None:
                 return None
 
             interconexion.porcentaje = porcentaje
