@@ -110,3 +110,20 @@ def obtener_nombre_archivo(mensaje):
             print("Operación interrumpida por el usuario.")
         except Exception as e:
             print(f"Error: {str(e)}")
+            
+def seleccionar_elemento(elementos, mensaje):
+    print(mensaje)
+    for i, elemento in enumerate(elementos, start=1):
+        print(f"{i}) {elemento.identificador}")
+
+    opcion = input("Ingrese el número correspondiente o 'cancelar' para volver atrás: ")
+
+    if opcion.lower() == 'cancelar':
+        return None
+
+    try:
+        indice = int(opcion) - 1
+        return elementos[indice]
+    except (ValueError, IndexError):
+        print("Opción inválida.")
+        return None

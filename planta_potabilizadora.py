@@ -1,6 +1,6 @@
 from typing import List
 from enumEficacia import Eficiencia
-from utils import validar_identificador, obtener_eficiencia, obtener_cantidad_litros
+from utils import seleccionar_elemento, validar_identificador, obtener_eficiencia, obtener_cantidad_litros
 
 class PlantaPotabilizadora:
     def __init__(self, identificador, eficiencia, cantidad_litros_maxima):
@@ -64,17 +64,22 @@ def modificar_planta():
 
         if opcion == "0":
             return
+        elif opcion == "1":
+            identificador = validar_identificador(plantas, "Ingrese el identificador de la planta potabilizadora a modificar o", debe_existir=True)
+            if identificador is None:
+                return
         elif opcion == "2":
             if not plantas:
                 print("No hay plantas potabilizadoras dadas de alta.")
                 return
-            for planta in plantas:
-                print(planta.identificador)
+            planta = seleccionar_elemento(plantas, "Seleccione una planta potabilizadora:")
+            if planta is None:
+                print("No se seleccionó ninguna planta potabilizadora.")
+                return
+            identificador = planta.identificador
+            print(planta.identificador)
             print("")
-        
-        identificador = validar_identificador(plantas, "Ingrese el identificador de la planta potabilizadora a modificar o", debe_existir=True)
-        if identificador is None:
-            return
+            
         planta_encontrada = None
 
         for planta in plantas:

@@ -1,5 +1,5 @@
 from typing import List
-from utils import validar_identificador, obtener_cantidad_litros
+from utils import seleccionar_elemento, validar_identificador, obtener_cantidad_litros
 
 class CentroDistribucion:
     def __init__(self, identificador, capacidad_reserva, reserva_actual, consumo_diario):
@@ -51,17 +51,22 @@ def modificar_centro():
 
         if opcion == "0":
             return
+        elif opcion == "1":
+            identificador = validar_identificador(centros, "Ingrese el identificador del centro de distribución a modificar o", debe_existir=True)
+            if identificador is None:
+                return
         elif opcion == "2":
             if not centros:
                 print("No hay centros de distribución dados de alta.")
                 return
-            for centro in centros:
-                print(centro.identificador)
+            centro = seleccionar_elemento(centros, "Seleccione un centro de distribución:")
+            if centro is None:
+                print("No se seleccionó ningún centro de distribucióna.")
+                return
+            identificador = centro.identificador
+            print(centro.identificador)
             print("")
 
-        identificador = validar_identificador(centros, "Ingrese el identificador del centro de distribución a modificar o", debe_existir=True)
-        if identificador is None:
-            return
         centro_encontrado = None
 
         for centro in centros:

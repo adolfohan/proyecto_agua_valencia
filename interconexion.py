@@ -3,7 +3,7 @@ from typing import List
 import fuente_hidrica #import fuentes
 import planta_potabilizadora #import plantas
 import centro_distribucion #import centros
-from utils import validar_porcentaje
+from utils import validar_porcentaje, seleccionar_elemento
 
 class Interconexion:
     contador = itertools.count(1)
@@ -94,23 +94,6 @@ def alta_interconexion():
     interconexion.identificador = f"{origen.identificador}-{destino.identificador}-{len(interconexiones_list) + 1}"
     interconexiones_list.append(interconexion)
     print("Interconexión agregada correctamente.")
-
-def seleccionar_elemento(elementos, mensaje):
-    print(mensaje)
-    for i, elemento in enumerate(elementos, start=1):
-        print(f"{i}) {elemento.identificador}")
-
-    opcion = input("Ingrese el número correspondiente o 'cancelar' para volver atrás: ")
-
-    if opcion.lower() == 'cancelar':
-        return None
-
-    try:
-        indice = int(opcion) - 1
-        return elementos[indice]
-    except (ValueError, IndexError):
-        print("Opción inválida.")
-        return None
 
 def modificar_interconexion():
     try:

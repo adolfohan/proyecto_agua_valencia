@@ -1,6 +1,6 @@
 from typing import List
 from enumCalidad import Calidad
-from utils import validar_identificador, obtener_calidad_agua, obtener_cantidad_litros
+from utils import seleccionar_elemento, validar_identificador, obtener_calidad_agua, obtener_cantidad_litros
 
 class FuenteHidrica:
     def __init__(self, identificador, calidad, cantidad_litros):
@@ -70,8 +70,12 @@ def modificar_fuente():
             if not fuentes:
                 print("No hay fuentes hídricas dadas de alta.")
                 return
-            for fuente in fuentes:
-                print(fuente.identificador)
+            fuente = seleccionar_elemento(fuentes, "Seleccione una fuente hídrica:")
+            if fuente is None:
+                print("No se seleccionó ninguna fuente hídrica.")
+                return
+            identificador = fuente.identificador
+            print(fuente.identificador)
             print("")
 
         for fuente in fuentes:
