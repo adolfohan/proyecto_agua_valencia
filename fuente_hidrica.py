@@ -72,7 +72,6 @@ def modificar_fuente():
                 return
             fuente = seleccionar_elemento(fuentes, "Seleccione una fuente hídrica:")
             if fuente is None:
-                print("No se seleccionó ninguna fuente hídrica.")
                 return
             identificador = fuente.identificador
             print(fuente.identificador)

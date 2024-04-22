@@ -89,6 +89,11 @@ def alta_interconexion():
     if not origen.puede_agregar_interconexion(porcentaje):
         print("La capacidad asignada supera el 100% con las otras interconexiones existentes.")
         return
+    
+    total_porcentaje = sum(i.porcentaje for i in interconexiones_list if i.origen == origen)
+    if total_porcentaje + porcentaje > 100:
+        print("La capacidad asignada supera el 100% con las otras interconexiones existentes.")
+        return
 
     interconexion = Interconexion(origen, destino, porcentaje)
     interconexion.identificador = f"{origen.identificador}-{destino.identificador}-{len(interconexiones_list) + 1}"
@@ -119,7 +124,6 @@ def modificar_interconexion():
                 return
             interconexion = seleccionar_elemento(interconexiones_list, "Seleccione una interconexión:")
             if interconexion is None:
-                print("No se seleccionó ninguna interconexión.")
                 return
             identificador = interconexion.identificador
             print(interconexion.identificador)
