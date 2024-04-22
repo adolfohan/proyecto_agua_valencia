@@ -44,7 +44,11 @@ def modificar_centro():
         print("2) Listar todos los centros de distribución")
         print("0) Regresar")
         opcion = input("Ingrese una opción: ")
-        
+
+        while opcion not in ["0", "1", "2"]:
+            print("Opción inválida. Por favor, intente de nuevo.")
+            opcion = input("Ingrese una opción: ")
+
         if opcion == "0":
             return
         elif opcion == "2":
@@ -68,10 +72,14 @@ def modificar_centro():
         if centro_encontrado is not None:
             print("Centro encontrado.")
             print("1) Modificar centro")
-            print("0) Regresar")
             print("2) Dar de baja centro")
+            print("0) Regresar")
             opcion = input("Ingrese una opción: ")
-            
+
+            while opcion not in ["0", "1", "2"]:
+                print("Opción inválida. Por favor, intente de nuevo.")
+                opcion = input("Ingrese una opción: ")
+
             if opcion == "0":
                 return
             elif opcion == "1":

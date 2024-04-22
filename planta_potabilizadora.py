@@ -38,7 +38,13 @@ def alta_planta():
             plantas.append(planta)
             print("Planta potabilizadora agregada correctamente.")
 
-            otra_planta = input("¿Desea agregar otra planta potabilizadora? (s/n): ")
+            while True:
+                otra_planta = input("¿Desea agregar otra planta potabilizadora? (s/n): ")
+                if otra_planta.lower() in ['s', 'n']:
+                    break
+                else:
+                    print("Opción inválida. Por favor, ingrese 's' o 'n'.")
+
             if otra_planta.lower() != 's':
                 break
         except ValueError as e:
@@ -52,6 +58,10 @@ def modificar_planta():
         print("0) Regresar")
         opcion = input("Ingrese una opción: ")
         
+        while opcion not in ["0", "1", "2"]:
+            print("Opción inválida. Por favor, intente de nuevo.")
+            opcion = input("Ingrese una opción: ")
+
         if opcion == "0":
             return
         elif opcion == "2":
@@ -79,6 +89,10 @@ def modificar_planta():
             print("0) Regresar")
             opcion = input("Ingrese una opción: ")
         
+            while opcion not in ["0", "1", "2"]:
+                print("Opción inválida. Por favor, intente de nuevo.")
+                opcion = input("Ingrese una opción: ")
+
             if opcion == "0":
                 return
             elif opcion == "1":

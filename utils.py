@@ -20,7 +20,7 @@ def validar_identificador(elementos, mensaje, debe_existir=False):
         except Exception as e:
             print(f"Error: {str(e)}")
 
-def obtener_cantidad_litros(mensaje, min_value=1, max_value=None):
+def obtener_cantidad_litros(mensaje, min_value=0, max_value=None):
     while True:
         try:
             entrada = input(mensaje + " ingrese 'cancelar' para salir: ")

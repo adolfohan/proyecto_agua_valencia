@@ -1,8 +1,8 @@
 import itertools
 from typing import List
-from fuentes import fuentes
-from plantas import plantas
-from centros import centros
+import fuente_hidrica #import fuentes
+import planta_potabilizadora #import plantas
+import centro_distribucion #import centros
 from utils import validar_porcentaje
 
 class Interconexion:
@@ -17,7 +17,7 @@ class Interconexion:
     def generar_identificador(self, origen, destino):
         return f"{origen.identificador}-{destino.identificador}-{next(self.contador)}"
 
-interconexiones: List[Interconexion] = []
+interconexiones_list: List[Interconexion] = []
 
 def seleccionar_elemento_disponible(elementos, mensaje):
     print(mensaje)
@@ -25,9 +25,9 @@ def seleccionar_elemento_disponible(elementos, mensaje):
     for i, elemento in enumerate(elementos_disponibles, start=1):
         print(f"{i}) {elemento.identificador}")
 
-    opcion = input("Ingrese el número correspondiente o '0' para cancelar: ")
+    opcion = input("Ingrese el número correspondiente o 'cancelar' para volver atrás: ")
 
-    if opcion == "0":
+    if opcion.lower() == 'cancelar':
         return None
 
     try:
@@ -52,11 +52,19 @@ def alta_interconexion():
     if opcion == 0:
         return
     elif opcion == 1:
-        origen = seleccionar_elemento_disponible(fuentes, "Seleccione una fuente hídrica: ")
-        destino = seleccionar_elemento(plantas, "Seleccione una planta potabilizadora: ")
+        origen = seleccionar_elemento_disponible(fuente_hidrica.fuentes, "Seleccione una fuente hídrica: ")
+        if origen is None:
+            return
+        destino = seleccionar_elemento(planta_potabilizadora.plantas, "Seleccione una planta potabilizadora: ")
+        if destino is None:
+            return
     elif opcion == 2:
-        origen = seleccionar_elemento_disponible(plantas, "Seleccione una planta potabilizadora: ")
-        destino = seleccionar_elemento(centros, "Seleccione un centro de distribución: ")
+        origen = seleccionar_elemento_disponible(planta_potabilizadora.plantas, "Seleccione una planta potabilizadora: ")
+        if origen is None:
+            return
+        destino = seleccionar_elemento(centro_distribucion.centros, "Seleccione un centro de distribución: ")
+        if destino is None:
+            return
     else:
         print("Opción inválida.")
         return
@@ -83,8 +91,8 @@ def alta_interconexion():
         return
 
     interconexion = Interconexion(origen, destino, porcentaje)
-    interconexion.identificador = f"{origen.identificador}-{destino.identificador}-{len(interconexiones) + 1}"
-    interconexiones.append(interconexion)
+    interconexion.identificador = f"{origen.identificador}-{destino.identificador}-{len(interconexiones_list) + 1}"
+    interconexiones_list.append(interconexion)
     print("Interconexión agregada correctamente.")
 
 def seleccionar_elemento(elementos, mensaje):
@@ -92,9 +100,9 @@ def seleccionar_elemento(elementos, mensaje):
     for i, elemento in enumerate(elementos, start=1):
         print(f"{i}) {elemento.identificador}")
 
-    opcion = input("Ingrese el número correspondiente o '0' para cancelar: ")
+    opcion = input("Ingrese el número correspondiente o 'cancelar' para volver atrás: ")
 
-    if opcion == "0":
+    if opcion.lower() == 'cancelar':
         return None
 
     try:
@@ -112,19 +120,25 @@ def modificar_interconexion():
         print("0) Regresar")
         opcion = input("Ingrese una opción: ")
 
+        while opcion not in ["0", "1", "2"]:
+            print("Opción inválida. Por favor, intente de nuevo.")
+            opcion = input("Ingrese una opción: ")
+
         if opcion == "0":
             return
         elif opcion == "2":
-            if not interconexiones:
+            if not interconexiones_list:
                 print("No hay interconexiones dadas de alta.")
                 return
-            for interconexion in interconexiones:
+            for interconexion in interconexiones_list:
                 print(interconexion.identificador)
             print("")
 
-        identificador = input("Ingrese el identificador de la interconexión a modificar: ")
+        identificador = input("Ingrese el identificador de la interconexión a modificar o ingrese 'cancelar' para volver atrás: ")
+        if identificador.lower() == 'cancelar':
+            return None
 
-        interconexion = next((i for i in interconexiones if i.identificador == identificador), None)
+        interconexion = next((i for i in interconexiones_list if i.identificador == identificador), None)
         if interconexion is None:
             print(f"No se encontró una interconexión con el identificador '{identificador}'.")
             return
@@ -135,17 +149,21 @@ def modificar_interconexion():
         print("0) Regresar")
         opcion = input("Ingrese una opción: ")
 
+        while opcion not in ["0", "1", "2"]:
+            print("Opción inválida. Por favor, intente de nuevo.")
+            opcion = input("Ingrese una opción: ")
+
         if opcion == "0":
             return
         elif opcion == "1":
-            porcentaje = validar_porcentaje("Ingrese el nuevo porcentaje de la interconexión: ")
-            if porcentaje is None:
-                return
+            porcentaje = validar_porcentaje("Ingrese el nuevo porcentaje de la interconexión o ingrese 'cancelar' para volver atrás: ")
+            if porcentaje is None or porcentaje.lower() == 'cancelar':
+                return None
 
             interconexion.porcentaje = porcentaje
             print("Interconexión modificada correctamente.")
         elif opcion == "2":
-            interconexiones.remove(interconexion)
+            interconexiones_list.remove(interconexion)
             print("Interconexión dada de baja correctamente.")
     except Exception as e:
         print(f"Error: {str(e)}")

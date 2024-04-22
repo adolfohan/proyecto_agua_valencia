@@ -1,40 +1,36 @@
-import fuentes
-import plantas
-import centros
-import interconexiones
-import pickle
+import fuente_hidrica
+import planta_potabilizadora
+import centro_distribucion
+import interconexion
 
 def mostrar_info_sistema():
     print("\nInformación del sistema:")
 
     print("\nFuentes hídricas:")
-    for fuente in fuentes.fuentes:
+    for fuente in fuente_hidrica.fuentes:
         print(f"- {fuente.identificador}: {fuente.calidad.name}, {fuente.cantidad_litros} litros/día")
 
     print("\nPlantas potabilizadoras:")
-    for planta in plantas.plantas:
+    for planta in planta_potabilizadora.plantas:
         print(f"- {planta.identificador}: {planta.eficiencia.name}, {planta.cantidad_litros_maxima} litros/día")
 
     print("\nCentros de distribución:")
-    for centro in centros.centros:
+    for centro in centro_distribucion.centros:
         print(f"- {centro.identificador}: Capacidad {centro.capacidad_reserva}, Reserva {centro.reserva_actual}, Consumo {centro.consumo_diario} litros/día")
 
     print("\nInterconexiones:")
-    for interconexion in interconexiones.interconexiones:
-        print(f"- {interconexion.identificador}: {interconexion.origen.identificador} -> {interconexion.destino.identificador} ({interconexion.porcentaje}%)")
+    for inter in interconexion.interconexiones_list:
+        print(f"- {inter.identificador}: {inter.origen.identificador} -> {inter.destino.identificador} ({inter.porcentaje}%)")
 
-def cargar_sistema(archivo):
+def cargar_sistema(data):
     try:
-        data = pickle.load(archivo)
-        fuentes.fuentes, plantas.plantas, centros.centros, interconexiones.interconexiones = data
-        print("System state loaded successfully.")
+        fuente_hidrica.fuentes, planta_potabilizadora.plantas, centro_distribucion.centros, interconexion.interconexiones_list = data
     except Exception as e:
         print(f"An error occurred while loading the system state: {e}")
 
-def guardar_sistema(archivo):
+def guardar_sistema():
     try:
-        data = (fuentes.fuentes, plantas.plantas, centros.centros, interconexiones.interconexiones)
-        pickle.dump(data, archivo)
-        print("System state saved successfully.")
+        data = (fuente_hidrica.fuentes, planta_potabilizadora.plantas, centro_distribucion.centros, interconexion.interconexiones_list)
+        return data
     except Exception as e:
         print(f"An error occurred while saving the system state: {e}")

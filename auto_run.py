@@ -14,7 +14,7 @@ class MyHandler(FileSystemEventHandler):
                 print(f'Error occurred while running script: {e}')
 
 if __name__ == "__main__":
-    path = '.'  # the path to be monitored, use '.' for current directory
+    path = '.'
     event_handler = MyHandler()
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)

@@ -1,7 +1,7 @@
-from fuentes import menu_fuentes
-from plantas import menu_plantas
-from centros import menu_centros
-from interconexiones import menu_interconexiones
+from fuente_hidrica import menu_fuentes
+from planta_potabilizadora import menu_plantas
+from centro_distribucion import menu_centros
+from interconexion import menu_interconexiones
 from simulacion import simular_dias
 from sistema import mostrar_info_sistema
 from ficheros import cargar_datos, guardar_datos
