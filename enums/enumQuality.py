@@ -1,6 +1,6 @@
 from enum import Enum
 
-class Calidad(Enum):
+class Quality(Enum):
     POTABLE = 1
     ALTA = 2
     MEDIA = 3

@@ -1,42 +1,48 @@
 import glob
 import pickle
-from utils import obtener_nombre_archivo, seleccionar_elemento
-from sistema import cargar_sistema, guardar_sistema
+from utils.utils import get_file_name, display_options
+from system import load_system_data, save_system_data
 
-def cargar_datos():
-    files = glob.glob("*.pkl")
+def load_data():
+    files = glob.glob("data/*.pkl")
     if not files:
         print("No hay archivos disponibles.")
         return
 
     class File:
-        def __init__(self, identificador):
-            self.identificador = identificador
+        def __init__(self, id):
+            self.id = id
 
     files = [File(f) for f in files]
-    file = seleccionar_elemento(files, "Seleccione un archivo:")
+    file = display_options(files, "Seleccione un archivo:")
 
     if file is None:
         print("Operación cancelada.")
         return
 
-    nombre_archivo = file.identificador
+    file_name = file.id
 
     try:
-        with open(nombre_archivo, 'rb') as archivo:
+        with open(file_name, 'rb') as archivo:
             data = pickle.load(archivo)
-            cargar_sistema(data)
+            load_system_data(data)
             print("Datos cargados correctamente.")
     except FileNotFoundError:
-        print(f"El archivo '{nombre_archivo}' no fue encontrado.")
+        print(f"El archivo '{file_name}' no fue encontrado.")
     except Exception as e:
         print(f"Ocurrió un error al cargar los datos: {e}")
 
-def guardar_datos():
-    nombre_archivo = obtener_nombre_archivo("Ingrese el nombre del archivo para guardar los datos: ")
+import os
+
+def save_data():
+    file_name = get_file_name("Ingrese el nombre del archivo para guardar los datos: ")
+    directory = "data"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    file_name = f"{directory}/{file_name}"
     try:
-        with open(nombre_archivo, 'wb') as archivo:
-            data = guardar_sistema()
+        with open(file_name, 'wb') as archivo:
+            data = save_system_data()
             pickle.dump(data, archivo)
             print("Datos guardados correctamente.")
     except Exception as e:
